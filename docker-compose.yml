@@ -1,0 +1,15 @@
+﻿services:
+  postgres:
+    image: postgres:16
+    container_name: nexshift_db
+    environment:
+      POSTGRES_DB: nexshift
+      POSTGRES_USER: nexshift_user
+      POSTGRES_PASSWORD: nexshift_pass
+    ports:
+      - "5432:5432"
+    volumes:
+      - nexshift_data:/var/lib/postgresql/data
+
+volumes:
+  nexshift_data:

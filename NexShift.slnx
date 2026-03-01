@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="NexShift.API/NexShift.API.csproj" />
+  <Project Path="NexShift.Core/NexShift.Core.csproj" />
+  <Project Path="NexShift.Infrastructure/NexShift.Infrastructure.csproj" />
+</Solution>
