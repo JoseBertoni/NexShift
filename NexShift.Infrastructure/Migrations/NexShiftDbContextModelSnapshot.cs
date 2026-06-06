@@ -22,6 +22,458 @@ namespace NexShift.Infrastructure.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            modelBuilder.Entity("NexShift.Core.Entities.BacklogRule", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Category")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<bool>("IsActive")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(true);
+
+                    b.Property<string>("Pattern")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<string>("Reason")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Pattern");
+
+                    b.ToTable("BacklogRules");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Category = "ManualRequired",
+                            CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Este archivo usa WCF que no existe en .NET moderno.",
+                            IsActive = true,
+                            Pattern = "ServiceContract",
+                            Reason = "Migrar manualmente a gRPC (recomendado) o REST. Ver: aka.ms/wcf-migration",
+                            Title = "WCF Service detectado",
+                            UpdatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc)
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Category = "ManualRequired",
+                            CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Este archivo usa WCF que no existe en .NET moderno.",
+                            IsActive = true,
+                            Pattern = "OperationContract",
+                            Reason = "Migrar manualmente a gRPC (recomendado) o REST. Ver: aka.ms/wcf-migration",
+                            Title = "WCF Service detectado",
+                            UpdatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc)
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Category = "ManualRequired",
+                            CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Este archivo usa WCF que no existe en .NET moderno.",
+                            IsActive = true,
+                            Pattern = "System.ServiceModel",
+                            Reason = "Migrar manualmente a gRPC (recomendado) o REST. Ver: aka.ms/wcf-migration",
+                            Title = "WCF Service detectado",
+                            UpdatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc)
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Category = "ManualRequired",
+                            CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Los controles Web Forms no tienen equivalente en .NET moderno.",
+                            IsActive = true,
+                            Pattern = "System.Web.UI",
+                            Reason = "La lógica del Code Behind puede rescatarse. La UI debe reescribirse en Razor Pages o Blazor.",
+                            Title = "ASP.NET Web Forms detectado",
+                            UpdatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc)
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Category = "ManualRequired",
+                            CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Los controles Web Forms no tienen equivalente en .NET moderno.",
+                            IsActive = true,
+                            Pattern = "Page_Load",
+                            Reason = "La lógica del Code Behind puede rescatarse. La UI debe reescribirse en Razor Pages o Blazor.",
+                            Title = "ASP.NET Web Forms detectado",
+                            UpdatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc)
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Category = "ManualRequired",
+                            CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Los controles Web Forms no tienen equivalente en .NET moderno.",
+                            IsActive = true,
+                            Pattern = "ViewState",
+                            Reason = "La lógica del Code Behind puede rescatarse. La UI debe reescribirse en Razor Pages o Blazor.",
+                            Title = "ASP.NET Web Forms detectado",
+                            UpdatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc)
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Category = "ManualRequired",
+                            CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "FormsAuthentication no existe en .NET moderno.",
+                            IsActive = true,
+                            Pattern = "FormsAuthentication",
+                            Reason = "Decisión requerida: ¿JWT + Identity, Azure AD, Auth0? El motor no puede elegir por vos.",
+                            Title = "Autenticación legacy detectada",
+                            UpdatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc)
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Category = "ManualRequired",
+                            CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "WindowsIdentity requiere decisión arquitectural.",
+                            IsActive = true,
+                            Pattern = "WindowsIdentity",
+                            Reason = "Decisión requerida: ¿JWT + Identity, Azure AD, Auth0? El motor no puede elegir por vos.",
+                            Title = "Autenticación legacy detectada",
+                            UpdatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc)
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Category = "ManualRequired",
+                            CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Este código lee/escribe el Registry de Windows.",
+                            IsActive = true,
+                            Pattern = "Microsoft.Win32.Registry",
+                            Reason = ".NET moderno es multiplataforma. Migrar a appsettings.json, Azure Key Vault o variables de entorno.",
+                            Title = "Windows Registry detectado",
+                            UpdatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc)
+                        },
+                        new
+                        {
+                            Id = 10,
+                            Category = "ManualRequired",
+                            CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Este código lee/escribe el Registry de Windows.",
+                            IsActive = true,
+                            Pattern = "RegistryKey",
+                            Reason = ".NET moderno es multiplataforma. Migrar a appsettings.json, Azure Key Vault o variables de entorno.",
+                            Title = "Windows Registry detectado",
+                            UpdatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc)
+                        },
+                        new
+                        {
+                            Id = 11,
+                            Category = "ManualRequired",
+                            CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Dependencia de DLL nativa de Windows.",
+                            IsActive = true,
+                            Pattern = "DllImport",
+                            Reason = "Evaluar si existe alternativa cross-platform. Si no, la app debe correr en Windows.",
+                            Title = "COM Interop / P/Invoke detectado",
+                            UpdatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc)
+                        },
+                        new
+                        {
+                            Id = 12,
+                            Category = "ManualRequired",
+                            CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Dependencia de DLL nativa de Windows.",
+                            IsActive = true,
+                            Pattern = "ComVisible",
+                            Reason = "Evaluar si existe alternativa cross-platform. Si no, la app debe correr en Windows.",
+                            Title = "COM Interop / P/Invoke detectado",
+                            UpdatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc)
+                        },
+                        new
+                        {
+                            Id = 13,
+                            Category = "ManualRequired",
+                            CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Patrones de EF6 que no existen en EF Core.",
+                            IsActive = true,
+                            Pattern = "Database.SetInitializer",
+                            Reason = "Database.SetInitializer → EF Core Migrations. Revisar lazy loading y transacciones.",
+                            Title = "Entity Framework 6 incompatible con EF Core",
+                            UpdatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc)
+                        },
+                        new
+                        {
+                            Id = 14,
+                            Category = "ManualRequired",
+                            CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Namespace de EF6 detectado.",
+                            IsActive = true,
+                            Pattern = "System.Data.Entity",
+                            Reason = "Reemplazar por Microsoft.EntityFrameworkCore. Revisar breaking changes en lazy loading.",
+                            Title = "Entity Framework 6 incompatible con EF Core",
+                            UpdatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc)
+                        },
+                        new
+                        {
+                            Id = 15,
+                            Category = "NeedsReview",
+                            CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Clase estática detectada.",
+                            IsActive = true,
+                            Pattern = "static class",
+                            Reason = "Evaluar si debe ser Scoped, Singleton o Transient en el contenedor de DI de .NET.",
+                            Title = "Clase estática — candidata a DI",
+                            UpdatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc)
+                        },
+                        new
+                        {
+                            Id = 16,
+                            Category = "NeedsReview",
+                            CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "GDI+ depende de librerías nativas de Windows.",
+                            IsActive = true,
+                            Pattern = "System.Drawing",
+                            Reason = "En Linux/Azure va a fallar. Migrar a SkiaSharp o ImageSharp.",
+                            Title = "System.Drawing / GDI+ detectado",
+                            UpdatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc)
+                        },
+                        new
+                        {
+                            Id = 17,
+                            Category = "NeedsReview",
+                            CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = ".Result detectado sin async/await.",
+                            IsActive = true,
+                            Pattern = ".Result",
+                            Reason = "Causa deadlocks en ASP.NET Core. Convertir a async/await con cuidado.",
+                            Title = "Código sincrónico bloqueante",
+                            UpdatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc)
+                        },
+                        new
+                        {
+                            Id = 18,
+                            Category = "NeedsReview",
+                            CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Bloquea el thread en lugar de usar async.",
+                            IsActive = true,
+                            Pattern = "Thread.Sleep",
+                            Reason = "Reemplazar por await Task.Delay() en contexto async.",
+                            Title = "Thread.Sleep detectado",
+                            UpdatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc)
+                        },
+                        new
+                        {
+                            Id = 19,
+                            Category = "NeedsReview",
+                            CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Acceso estático a HttpContext.",
+                            IsActive = true,
+                            Pattern = "HttpContext.Current",
+                            Reason = "Inyectar IHttpContextAccessor en lugar del static. Puede causar NullReference en .NET moderno.",
+                            Title = "HttpContext.Current detectado",
+                            UpdatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc)
+                        },
+                        new
+                        {
+                            Id = 20,
+                            Category = "NeedsReview",
+                            CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Lectura de configuración vía App.config.",
+                            IsActive = true,
+                            Pattern = "ConfigurationManager.AppSettings",
+                            Reason = "Reemplazar por IConfiguration inyectado. Web.config fue migrado a appsettings.json automáticamente.",
+                            Title = "ConfigurationManager detectado",
+                            UpdatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc)
+                        },
+                        new
+                        {
+                            Id = 21,
+                            Category = "NeedsReview",
+                            CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Pipeline OWIN detectado.",
+                            IsActive = true,
+                            Pattern = "Microsoft.Owin",
+                            Reason = "Migrar a middleware nativo de ASP.NET Core. Program.cs fue generado como punto de partida.",
+                            Title = "OWIN / Katana middleware",
+                            UpdatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc)
+                        },
+                        new
+                        {
+                            Id = 22,
+                            Category = "NeedsReview",
+                            CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Pipeline OWIN detectado.",
+                            IsActive = true,
+                            Pattern = "IAppBuilder",
+                            Reason = "Migrar a middleware nativo de ASP.NET Core. Program.cs fue generado como punto de partida.",
+                            Title = "OWIN / Katana middleware",
+                            UpdatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc)
+                        },
+                        new
+                        {
+                            Id = 23,
+                            Category = "ManualRequired",
+                            CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "BinaryFormatter está obsoleto y deshabilitado por defecto en .NET moderno por riesgo de ejecución remota de código.",
+                            IsActive = true,
+                            Pattern = "BinaryFormatter",
+                            Reason = "Migrar a System.Text.Json, XmlSerializer o Google Protocol Buffers. Ver: aka.ms/binaryformatter",
+                            Title = "BinaryFormatter (vulnerabilidad de seguridad)",
+                            UpdatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc)
+                        },
+                        new
+                        {
+                            Id = 24,
+                            Category = "ManualRequired",
+                            CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Thread.Abort lanza ThreadAbortException, que fue eliminada en .NET 5+.",
+                            IsActive = true,
+                            Pattern = "Thread.Abort",
+                            Reason = "Reemplazar con CancellationToken para cancelación cooperativa. Es un cambio de patrón de diseño.",
+                            Title = "Thread.Abort eliminado en .NET moderno",
+                            UpdatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc)
+                        },
+                        new
+                        {
+                            Id = 25,
+                            Category = "ManualRequired",
+                            CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "La creación de AppDomains secundarios fue eliminada. Solo existe el AppDomain raíz.",
+                            IsActive = true,
+                            Pattern = "AppDomain.CreateDomain",
+                            Reason = "Usar AssemblyLoadContext como alternativa para aislamiento de ensamblados.",
+                            Title = "AppDomain.CreateDomain no disponible en .NET moderno",
+                            UpdatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc)
+                        },
+                        new
+                        {
+                            Id = 26,
+                            Category = "ManualRequired",
+                            CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "System.Runtime.Remoting no existe en .NET moderno.",
+                            IsActive = true,
+                            Pattern = "System.Runtime.Remoting",
+                            Reason = "Migrar a gRPC (recomendado) o WCF/CoreWCF para comunicación entre procesos.",
+                            Title = ".NET Remoting completamente eliminado",
+                            UpdatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc)
+                        },
+                        new
+                        {
+                            Id = 27,
+                            Category = "ManualRequired",
+                            CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "El namespace System.Web.Security no existe en .NET moderno.",
+                            IsActive = true,
+                            Pattern = "System.Web.Security",
+                            Reason = "Migrar a Microsoft.AspNetCore.Identity o ASP.NET Core Authentication. Requiere decisión arquitectural.",
+                            Title = "System.Web.Security eliminado",
+                            UpdatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc)
+                        },
+                        new
+                        {
+                            Id = 28,
+                            Category = "NeedsReview",
+                            CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "System.Diagnostics.EventLog solo funciona en Windows.",
+                            IsActive = true,
+                            Pattern = "System.Diagnostics.EventLog",
+                            Reason = "Reemplazar con Microsoft.Extensions.Logging + Serilog/NLog para logging cross-platform.",
+                            Title = "EventLog (solo Windows)",
+                            UpdatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc)
+                        },
+                        new
+                        {
+                            Id = 29,
+                            Category = "NeedsReview",
+                            CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Server.MapPath depende de IIS y no está disponible en ASP.NET Core.",
+                            IsActive = true,
+                            Pattern = "Server.MapPath",
+                            Reason = "Reemplazar con IWebHostEnvironment.WebRootPath o IHostEnvironment.ContentRootPath.",
+                            Title = "Server.MapPath (IIS-specific)",
+                            UpdatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc)
+                        },
+                        new
+                        {
+                            Id = 30,
+                            Category = "NeedsReview",
+                            CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "HttpWebRequest es una API legacy de networking.",
+                            IsActive = true,
+                            Pattern = "HttpWebRequest",
+                            Reason = "Reemplazar con HttpClient inyectado via IHttpClientFactory. Es más eficiente y testeable.",
+                            Title = "HttpWebRequest obsoleto",
+                            UpdatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc)
+                        });
+                });
+
+            modelBuilder.Entity("NexShift.Core.Entities.KnownDeprecatedPackage", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("AdvisoryUrl")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Category")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Reason")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("ReplacementVersion")
+                        .HasColumnType("text");
+
+                    b.Property<string>("SuggestedReplacement")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("KnownDeprecatedPackages");
+                });
+
             modelBuilder.Entity("NexShift.Core.Entities.MigrationIssue", b =>
                 {
                     b.Property<Guid>("Id")
@@ -59,6 +511,21 @@ namespace NexShift.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
+                    b.Property<int>("AutomatedCount")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("BuildErrorCount")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("BuildResultJson")
+                        .HasColumnType("text");
+
+                    b.Property<bool?>("BuildSuccess")
+                        .HasColumnType("boolean");
+
+                    b.Property<int>("BuildWarningCount")
+                        .HasColumnType("integer");
+
                     b.Property<DateTime?>("CompletedAt")
                         .HasColumnType("timestamp with time zone");
 
@@ -68,14 +535,26 @@ namespace NexShift.Infrastructure.Migrations
                     b.Property<string>("ErrorMessage")
                         .HasColumnType("text");
 
+                    b.Property<int>("ManualCount")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("MigrationPercentage")
+                        .HasColumnType("integer");
+
                     b.Property<string>("OutputZipPath")
                         .HasColumnType("text");
+
+                    b.Property<int>("Progress")
+                        .HasColumnType("integer");
 
                     b.Property<string>("ReportMarkdown")
                         .HasColumnType("text");
 
                     b.Property<Guid>("RepositoryId")
                         .HasColumnType("uuid");
+
+                    b.Property<int>("ReviewCount")
+                        .HasColumnType("integer");
 
                     b.Property<int>("Status")
                         .HasColumnType("integer");
@@ -92,17 +571,69 @@ namespace NexShift.Infrastructure.Migrations
                     b.ToTable("MigrationJobs");
                 });
 
+            modelBuilder.Entity("NexShift.Core.Entities.NugetPackage", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<bool>("IsDeprecated")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsManuallyAdded")
+                        .HasColumnType("boolean");
+
+                    b.Property<DateTime>("LastChecked")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("LatestVersion")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<string>("Reason")
+                        .HasMaxLength(1000)
+                        .HasColumnType("character varying(1000)");
+
+                    b.Property<string>("SuggestedReplacement")
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
+
+                    b.ToTable("NugetPackages");
+                });
+
             modelBuilder.Entity("NexShift.Core.Entities.Repository", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
+                    b.Property<string>("AnalysisResultJson")
+                        .HasColumnType("text");
+
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<int>("DeprecatedPackages")
+                        .HasColumnType("integer");
+
                     b.Property<string>("DetectedFramework")
                         .HasColumnType("text");
+
+                    b.Property<string>("IpAddress")
+                        .HasMaxLength(45)
+                        .HasColumnType("character varying(45)");
+
+                    b.Property<bool>("IsLegacy")
+                        .HasColumnType("boolean");
 
                     b.Property<int>("MigrationScore")
                         .HasColumnType("integer");
@@ -115,12 +646,21 @@ namespace NexShift.Infrastructure.Migrations
                     b.Property<int>("Status")
                         .HasColumnType("integer");
 
+                    b.Property<int>("TotalCsFiles")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("TotalPackages")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("TotalProjects")
+                        .HasColumnType("integer");
+
                     b.Property<string>("Url")
                         .IsRequired()
                         .HasMaxLength(500)
                         .HasColumnType("character varying(500)");
 
-                    b.Property<Guid>("UserId")
+                    b.Property<Guid?>("UserId")
                         .HasColumnType("uuid");
 
                     b.HasKey("Id");
@@ -130,6 +670,340 @@ namespace NexShift.Infrastructure.Migrations
                     b.ToTable("Repositories");
                 });
 
+            modelBuilder.Entity("NexShift.Core.Entities.TransformationRule", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<bool>("IsActive")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(true);
+
+                    b.Property<bool>("IsRegex")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("NeedsAI")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Pattern")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
+
+                    b.Property<int>("Priority")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Replacement")
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Pattern");
+
+                    b.HasIndex("Priority");
+
+                    b.ToTable("TransformationRules");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "System.Web.Mvc → Microsoft.AspNetCore.Mvc",
+                            IsActive = true,
+                            IsRegex = false,
+                            NeedsAI = false,
+                            Pattern = "using System.Web.Mvc;",
+                            Priority = 10,
+                            Replacement = "using Microsoft.AspNetCore.Mvc;",
+                            UpdatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc)
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "System.Web.Http → Microsoft.AspNetCore.Mvc",
+                            IsActive = true,
+                            IsRegex = false,
+                            NeedsAI = false,
+                            Pattern = "using System.Web.Http;",
+                            Priority = 10,
+                            Replacement = "using Microsoft.AspNetCore.Mvc;",
+                            UpdatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc)
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "System.Web.Optimization → removed",
+                            IsActive = true,
+                            IsRegex = false,
+                            NeedsAI = false,
+                            Pattern = "using System.Web.Optimization;",
+                            Priority = 10,
+                            Replacement = "// REMOVED: System.Web.Optimization - not available in .NET modern",
+                            UpdatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc)
+                        },
+                        new
+                        {
+                            Id = 4,
+                            CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "System.Web.Routing → removed",
+                            IsActive = true,
+                            IsRegex = false,
+                            NeedsAI = false,
+                            Pattern = "using System.Web.Routing;",
+                            Priority = 10,
+                            Replacement = "// REMOVED: System.Web.Routing - use ASP.NET Core routing",
+                            UpdatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc)
+                        },
+                        new
+                        {
+                            Id = 5,
+                            CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "ApiController → ControllerBase",
+                            IsActive = true,
+                            IsRegex = false,
+                            NeedsAI = false,
+                            Pattern = ": ApiController",
+                            Priority = 20,
+                            Replacement = ": ControllerBase",
+                            UpdatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc)
+                        },
+                        new
+                        {
+                            Id = 6,
+                            CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "MVC Controller kept as-is",
+                            IsActive = true,
+                            IsRegex = false,
+                            NeedsAI = false,
+                            Pattern = ": Controller",
+                            Priority = 20,
+                            Replacement = ": Controller",
+                            UpdatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc)
+                        },
+                        new
+                        {
+                            Id = 7,
+                            CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "System.Web.Http.HttpGet → HttpGet",
+                            IsActive = true,
+                            IsRegex = false,
+                            NeedsAI = false,
+                            Pattern = "[System.Web.Http.HttpGet]",
+                            Priority = 20,
+                            Replacement = "[HttpGet]",
+                            UpdatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc)
+                        },
+                        new
+                        {
+                            Id = 8,
+                            CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "System.Web.Http.HttpPost → HttpPost",
+                            IsActive = true,
+                            IsRegex = false,
+                            NeedsAI = false,
+                            Pattern = "[System.Web.Http.HttpPost]",
+                            Priority = 20,
+                            Replacement = "[HttpPost]",
+                            UpdatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc)
+                        },
+                        new
+                        {
+                            Id = 9,
+                            CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "System.Web.Http.HttpPut → HttpPut",
+                            IsActive = true,
+                            IsRegex = false,
+                            NeedsAI = false,
+                            Pattern = "[System.Web.Http.HttpPut]",
+                            Priority = 20,
+                            Replacement = "[HttpPut]",
+                            UpdatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc)
+                        },
+                        new
+                        {
+                            Id = 10,
+                            CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "System.Web.Http.HttpDelete → HttpDelete",
+                            IsActive = true,
+                            IsRegex = false,
+                            NeedsAI = false,
+                            Pattern = "[System.Web.Http.HttpDelete]",
+                            Priority = 20,
+                            Replacement = "[HttpDelete]",
+                            UpdatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc)
+                        },
+                        new
+                        {
+                            Id = 11,
+                            CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "RoutePrefix → Route",
+                            IsActive = true,
+                            IsRegex = false,
+                            NeedsAI = false,
+                            Pattern = "RoutePrefix(",
+                            Priority = 20,
+                            Replacement = "Route(",
+                            UpdatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc)
+                        },
+                        new
+                        {
+                            Id = 12,
+                            CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "WebConfigurationManager → IConfiguration comment",
+                            IsActive = true,
+                            IsRegex = false,
+                            NeedsAI = false,
+                            Pattern = "WebConfigurationManager.AppSettings",
+                            Priority = 30,
+                            Replacement = "// TODO: NEXSHIFT - Inject IConfiguration and use _configuration[\"key\"]",
+                            UpdatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc)
+                        },
+                        new
+                        {
+                            Id = 13,
+                            CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "ConfigurationManager → IConfiguration comment",
+                            IsActive = true,
+                            IsRegex = false,
+                            NeedsAI = false,
+                            Pattern = "ConfigurationManager.AppSettings",
+                            Priority = 30,
+                            Replacement = "// TODO: NEXSHIFT - Inject IConfiguration and use _configuration[\"key\"]",
+                            UpdatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc)
+                        },
+                        new
+                        {
+                            Id = 14,
+                            CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "HttpResponseMessage → IActionResult",
+                            IsActive = true,
+                            IsRegex = false,
+                            NeedsAI = false,
+                            Pattern = "HttpResponseMessage",
+                            Priority = 30,
+                            Replacement = "IActionResult",
+                            UpdatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc)
+                        },
+                        new
+                        {
+                            Id = 15,
+                            CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "IHttpActionResult → IActionResult",
+                            IsActive = true,
+                            IsRegex = false,
+                            NeedsAI = false,
+                            Pattern = "IHttpActionResult",
+                            Priority = 30,
+                            Replacement = "IActionResult",
+                            UpdatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc)
+                        },
+                        new
+                        {
+                            Id = 16,
+                            CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Request.CreateResponse OK → Ok()",
+                            IsActive = true,
+                            IsRegex = false,
+                            NeedsAI = false,
+                            Pattern = "Request.CreateResponse(HttpStatusCode.OK,",
+                            Priority = 30,
+                            Replacement = "Ok(",
+                            UpdatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc)
+                        },
+                        new
+                        {
+                            Id = 17,
+                            CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Request.CreateResponse BadRequest → BadRequest()",
+                            IsActive = true,
+                            IsRegex = false,
+                            NeedsAI = false,
+                            Pattern = "Request.CreateResponse(HttpStatusCode.BadRequest,",
+                            Priority = 30,
+                            Replacement = "BadRequest(",
+                            UpdatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc)
+                        },
+                        new
+                        {
+                            Id = 18,
+                            CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Request.CreateResponse NotFound → NotFound()",
+                            IsActive = true,
+                            IsRegex = false,
+                            NeedsAI = false,
+                            Pattern = "Request.CreateResponse(HttpStatusCode.NotFound)",
+                            Priority = 30,
+                            Replacement = "NotFound()",
+                            UpdatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc)
+                        },
+                        new
+                        {
+                            Id = 19,
+                            CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "HttpContext.Current → needs IHttpContextAccessor DI",
+                            IsActive = true,
+                            IsRegex = false,
+                            NeedsAI = true,
+                            Pattern = "HttpContext.Current",
+                            Priority = 50,
+                            UpdatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc)
+                        },
+                        new
+                        {
+                            Id = 20,
+                            CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "GlobalConfiguration → needs Program.cs refactor",
+                            IsActive = true,
+                            IsRegex = false,
+                            NeedsAI = true,
+                            Pattern = "GlobalConfiguration.Configure",
+                            Priority = 50,
+                            UpdatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc)
+                        },
+                        new
+                        {
+                            Id = 21,
+                            CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "System.Drawing → needs SkiaSharp or ImageSharp migration",
+                            IsActive = true,
+                            IsRegex = false,
+                            NeedsAI = true,
+                            Pattern = "System.Drawing",
+                            Priority = 50,
+                            UpdatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc)
+                        },
+                        new
+                        {
+                            Id = 22,
+                            CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Microsoft.Owin → needs ASP.NET Core middleware rewrite",
+                            IsActive = true,
+                            IsRegex = false,
+                            NeedsAI = true,
+                            Pattern = "Microsoft.Owin",
+                            Priority = 50,
+                            UpdatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc)
+                        });
+                });
+
             modelBuilder.Entity("NexShift.Core.Entities.User", b =>
                 {
                     b.Property<Guid>("Id")
@@ -137,20 +1011,37 @@ namespace NexShift.Infrastructure.Migrations
                         .HasColumnType("uuid");
 
                     b.Property<string>("AvatarUrl")
-                        .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Email")
-                        .IsRequired()
                         .HasMaxLength(200)
                         .HasColumnType("character varying(200)");
 
-                    b.Property<string>("GitHubId")
+                    b.Property<string>("GitHubAccessToken")
                         .IsRequired()
                         .HasColumnType("text");
+
+                    b.Property<long>("GitHubId")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("IsAdmin")
+                        .HasColumnType("boolean");
+
+                    b.Property<DateTime>("LastLoginAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Login")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
 
                     b.Property<int>("Plan")
                         .HasColumnType("integer");
@@ -158,14 +1049,12 @@ namespace NexShift.Infrastructure.Migrations
                     b.Property<int>("ReposUsed")
                         .HasColumnType("integer");
 
-                    b.Property<string>("Username")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("character varying(100)");
-
                     b.HasKey("Id");
 
                     b.HasIndex("GitHubId")
+                        .IsUnique();
+
+                    b.HasIndex("Login")
                         .IsUnique();
 
                     b.ToTable("Users");
@@ -198,8 +1087,7 @@ namespace NexShift.Infrastructure.Migrations
                     b.HasOne("NexShift.Core.Entities.User", "User")
                         .WithMany("Repositories")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.Navigation("User");
                 });

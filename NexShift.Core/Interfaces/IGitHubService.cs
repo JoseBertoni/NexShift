@@ -23,4 +23,6 @@ public class RepositoryTree
     public List<string> CsFiles { get; set; } = new();
     public int TotalFiles { get; set; }
     public long RepoSizeKb { get; set; }
+    public List<string> AllFiles { get; set; } = new();
+    public List<string> WebConfigFiles { get; set; } = new();
 }

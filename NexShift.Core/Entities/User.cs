@@ -3,23 +3,25 @@
     public class User
     {
         public Guid Id { get; set; }
-        public string GitHubId { get; set; } = string.Empty;
-        public string Username { get; set; } = string.Empty;
-        public string Email { get; set; } = string.Empty;
-        public string AvatarUrl { get; set; } = string.Empty;
+        public long GitHubId { get; set; }
+        public string Login { get; set; } = string.Empty;
+        public string? Name { get; set; }
+        public string? Email { get; set; }
+        public bool IsAdmin { get; set; } = false;
+        public string? AvatarUrl { get; set; }
+        public string GitHubAccessToken { get; set; } = string.Empty;
         public PlanType Plan { get; set; } = PlanType.Free;
         public int ReposUsed { get; set; } = 0;
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
-
-        // Navegación
+        public DateTime LastLoginAt { get; set; } = DateTime.UtcNow;
         public ICollection<Repository> Repositories { get; set; } = new List<Repository>();
     }
 
     public enum PlanType
     {
-        Free,       // 2 repos gratis
-        Developer,  // $19/mes, ilimitado
-        Team,       // $99/mes, 5 seats
-        Enterprise  // $499/mes, self-hosted
+        Free,
+        Developer,
+        Team,
+        Enterprise
     }
 }

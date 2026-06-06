@@ -12,6 +12,19 @@
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         public DateTime? CompletedAt { get; set; }
 
+        // Progreso y estadísticas
+        public int Progress { get; set; } = 0;
+        public int MigrationPercentage { get; set; }
+        public int AutomatedCount { get; set; }
+        public int ManualCount { get; set; }
+        public int ReviewCount { get; set; }
+
+        // Build validation
+        public string? BuildResultJson { get; set; }  // BuildResult serializado
+        public bool? BuildSuccess { get; set; }        // null = no ejecutado aún
+        public int BuildErrorCount { get; set; }
+        public int BuildWarningCount { get; set; }
+
         // Navegación
         public Repository Repository { get; set; } = null!;
         public ICollection<MigrationIssue> Issues { get; set; } = new List<MigrationIssue>();

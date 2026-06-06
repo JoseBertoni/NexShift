@@ -25,16 +25,26 @@ public class GitHubService : IGitHubService
     public async Task<RepositoryTree> GetRepositoryTreeAsync(string repoUrl, CancellationToken cancellationToken = default)
     {
         var (owner, repo) = ParseRepoUrl(repoUrl);
-
         _logger.LogInformation("Obteniendo tree de {Owner}/{Repo}", owner, repo);
 
-        // Info básica del repo
         var repoInfo = await _client.Repository.Get(owner, repo);
-
-        // Tree completo en una sola llamada
         var tree = await _client.Git.Tree.GetRecursive(owner, repo, repoInfo.DefaultBranch);
 
+        var allBlobs = tree.Tree
+            .Where(f => f.Type.Value == TreeType.Blob)
+            .Select(f => f.Path)
+            .ToList();
 
+        if (tree.Truncated)
+        {
+            _logger.LogWarning("Tree truncado para {Owner}/{Repo} — expandiendo manualmente", owner, repo);
+            allBlobs = await ExpandTruncatedTreeAsync(owner, repo, repoInfo.DefaultBranch, cancellationToken);
+        }
+
+        // Filtrar /obj/ y /bin/ de AllFiles también
+        allBlobs = allBlobs
+            .Where(f => !f.Contains("/obj/") && !f.Contains("/bin/"))
+            .ToList();
 
         var result = new RepositoryTree
         {
@@ -42,30 +52,75 @@ public class GitHubService : IGitHubService
             RepoName = repo,
             DefaultBranch = repoInfo.DefaultBranch,
             RepoSizeKb = repoInfo.Size,
-            TotalFiles = tree.Tree.Count
+            TotalFiles = allBlobs.Count
         };
 
-        result.CsprojFiles = tree.Tree
-            .Where(f => f.Path.EndsWith(".csproj", StringComparison.OrdinalIgnoreCase))
-            .Select(f => f.Path)
+        result.AllFiles = allBlobs;
+
+        result.CsprojFiles = allBlobs
+            .Where(f => f.EndsWith(".csproj", StringComparison.OrdinalIgnoreCase))
             .ToList();
 
-        result.CsFiles = tree.Tree
-            .Where(f => f.Path.EndsWith(".cs", StringComparison.OrdinalIgnoreCase))
-            .Select(f => f.Path)
+        result.CsFiles = allBlobs
+            .Where(f => f.EndsWith(".cs", StringComparison.OrdinalIgnoreCase))
             .ToList();
 
-        result.PackagesConfigFiles = tree.Tree
-            .Where(f => f.Path.EndsWith("packages.config", StringComparison.OrdinalIgnoreCase)
-                     || f.Path.EndsWith("Directory.Packages.props", StringComparison.OrdinalIgnoreCase)
-                     || f.Path.EndsWith("Directory.Build.props", StringComparison.OrdinalIgnoreCase)
-                     || f.Path.Equals("global.json", StringComparison.OrdinalIgnoreCase))
-            .Select(f => f.Path)
+        result.PackagesConfigFiles = allBlobs
+            .Where(f => f.EndsWith("packages.config", StringComparison.OrdinalIgnoreCase)
+                     || f.EndsWith("Directory.Packages.props", StringComparison.OrdinalIgnoreCase)
+                     || f.EndsWith("Directory.Build.props", StringComparison.OrdinalIgnoreCase)
+                     || f.Equals("global.json", StringComparison.OrdinalIgnoreCase))
             .ToList();
 
+        result.WebConfigFiles = allBlobs
+            .Where(f => f.EndsWith("Web.config", StringComparison.OrdinalIgnoreCase)
+                     && !f.Contains("bin/"))
+            .ToList();
+
+        _logger.LogInformation("Tree obtenido: {CsFiles} .cs, {Csproj} .csproj, {Total} total",
+            result.CsFiles.Count, result.CsprojFiles.Count, result.TotalFiles);
 
         return result;
     }
+
+    private async Task<List<string>> ExpandTruncatedTreeAsync(
+    string owner, string repo, string branch, CancellationToken cancellationToken)
+{
+    var allFiles = new List<string>();
+
+    // Obtenemos el tree raíz sin recursivo
+    var rootTree = await _client.Git.Tree.Get(owner, repo, branch);
+
+    foreach (var item in rootTree.Tree)
+    {
+        if (item.Type.Value == TreeType.Blob)
+        {
+            allFiles.Add(item.Path);
+        }
+        else if (item.Type.Value == TreeType.Tree)
+        {
+            try
+            {
+                // Expandimos cada directorio recursivamente
+                var subTree = await _client.Git.Tree.GetRecursive(owner, repo, item.Sha);
+                var subFiles = subTree.Tree
+                    .Where(f => f.Type.Value == TreeType.Blob)
+                    .Select(f => $"{item.Path}/{f.Path}")
+                    .ToList();
+                allFiles.AddRange(subFiles);
+
+                // Rate limit safety
+                await Task.Delay(100, cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogWarning(ex, "No se pudo expandir directorio {Path}", item.Path);
+            }
+        }
+    }
+
+    return allFiles;
+}
 
     public async Task<string> GetFileContentAsync(string repoUrl, string filePath, CancellationToken cancellationToken = default)
     {

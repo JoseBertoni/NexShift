@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(export PATH=\"$PATH:/c/Program Files/nodejs:/c/Users/nacho/AppData/Roaming/npm\")",
+      "Bash(npm --version)",
+      "Bash(npm run dev)",
+      "Bash(dotnet run --project NexShift.API)",
+      "Bash(powershell -Command \"Get-ChildItem ''C:\\\\Users\\\\nacho\\\\OneDrive\\\\Desktop\\\\NexShift'' -Recurse -ErrorAction SilentlyContinue | Unblock-File -ErrorAction SilentlyContinue; Write-Host ''Desbloqueo completado''\")",
+      "Bash(powershell -Command \"New-Item -ItemType Directory -Force ''C:\\\\Dev'' | Out-Null; Copy-Item -Recurse -Force ''C:\\\\Users\\\\nacho\\\\OneDrive\\\\Desktop\\\\NexShift'' ''C:\\\\Dev\\\\NexShift''; Write-Host ''Copiado OK''\")",
+      "Read(//c/Dev/NexShift/**)",
+      "Bash(curl -s \"http://localhost:5116/api/repository/analyze\" -X POST -H \"Content-Type: application/json\" -d '{\"\"url\"\":\"\"test\"\"}')"
+    ]
+  }
+}
